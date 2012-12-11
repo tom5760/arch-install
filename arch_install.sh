@@ -319,7 +319,7 @@ install_packages() {
     packages+=' mplayer pidgin vlc xscreensaver gparted dosfstools ntfsprogs'
 
     # Xserver
-    packages+=' xorg-apps xorg-server'
+    packages+=' xorg-apps xorg-server xorg-xinit xterm'
 
     # Fonts
     packages+=' ttf-dejavu ttf-liberation'
