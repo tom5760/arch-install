@@ -793,8 +793,6 @@ create_user() {
 
     useradd -m -s /bin/zsh -G adm,wheel,rfkill,games,network,video,audio,optical,floppy,storage,scanner,power,adbusers,wireshark "$name"
     echo -en "$password\n$password" | passwd "$name"
-
-    echo 'exec startxfce4' >> "/home/$name/.xinitrc"
 }
 
 update_locate() {
