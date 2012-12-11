@@ -79,7 +79,7 @@ VIDEO_DRIVER="i915"
 # For generic stuff
 #VIDEO_DRIVER="vesa"
 
-# Wireless device, leave blank to not use wireless
+# Wireless device, leave blank to not use wireless and use DHCP instead.
 WIRELESS_DEVICE="wlan0"
 # For tc4200's
 #WIRELESS_DEVICE="eth1"
@@ -551,6 +551,8 @@ set_daemons() {
     if [ -n "$WIRELESS_DEVICE" ]
     then
         systemctl enable net-auto-wired.service net-auto-wireless.service
+    else
+        systemctl enable dhcpcd@eth0.service
     fi
 
     if [ -z "$tmp_on_tmpfs" ]
