@@ -632,7 +632,7 @@ LABEL arch
 LABEL archfallback
 	MENU LABEL Arch Linux Fallback
 	LINUX ../vmlinuz-linux
-	APPEND root=/dev/vg00/root ro init=/bin/systemd $cryptresume=/dev/vg00/swap
+	APPEND root=/dev/vg00/root ro init=/bin/systemd $crypt resume=/dev/vg00/swap
 	INITRD ../initramfs-linux-fallback.img
 
 LABEL hdt
