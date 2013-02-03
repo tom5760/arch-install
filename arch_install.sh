@@ -530,7 +530,7 @@ FILES=""
 #
 ##   NOTE: If you have /usr on a separate partition, you MUST include the
 #    usr, fsck and shutdown hooks.
-HOOKS="base udev autodetect pata scsi sata keymap $encrypt lvm2 resume filesystems usbinput fsck"
+HOOKS="base udev autodetect modconf block keymap keyboard $encrypt lvm2 resume filesystems fsck"
 
 # COMPRESSION
 # Use this to compress the initramfs image. By default, gzip compression
