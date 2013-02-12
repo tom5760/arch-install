@@ -552,8 +552,7 @@ EOF
 set_daemons() {
     local tmp_on_tmpfs="$1"; shift
 
-    systemctl enable lvm.service cronie.service cpupower.service ntpd.service \
-        slim.service
+    systemctl enable cronie.service cpupower.service ntpd.service slim.service
 
     if [ -n "$WIRELESS_DEVICE" ]
     then
