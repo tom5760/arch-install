@@ -372,7 +372,7 @@ install_aur_packages() {
     export TMPDIR=/foo
     packer -S --noconfirm android-udev
     packer -S --noconfirm chromium-pepper-flash-stable
-    packer -S --noconfirm chromium-stable-libpdf
+    packer -S --noconfirm chromium-libpdf-stable
     unset TMPDIR
     rm -rf /foo
 }
