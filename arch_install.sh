@@ -422,19 +422,12 @@ set_fstab() {
     local boot_dev="$1"; shift
 
     local boot_uuid=$(get_uuid "$boot_dev")
-    local tmpfs=''
-
-    if [ -n "$tmp_on_tmpfs" ]
-    then
-        tmpfs='tmpfs          /tmp tmpfs nodev,nosuid      0 0'
-    fi
 
     cat > /etc/fstab <<EOF
 #
 # /etc/fstab: static file system information
 #
 # <file system> <dir>    <type> <options>    <dump> <pass>
-$tmpfs
 
 /dev/vg00/swap none swap  sw                0 0
 /dev/vg00/root /    ext4  defaults,relatime 0 1
