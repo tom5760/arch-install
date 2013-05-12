@@ -885,7 +885,7 @@ create_user() {
     local name="$1"; shift
     local password="$1"; shift
 
-    useradd -m -s /bin/zsh -G adm,wheel,rfkill,games,network,video,audio,optical,floppy,storage,scanner,power,adbusers,wireshark "$name"
+    useradd -m -s /bin/zsh -G adm,systemd-journal,wheel,rfkill,games,network,video,audio,optical,floppy,storage,scanner,power,adbusers,wireshark "$name"
     echo -en "$password\n$password" | passwd "$name"
 }
 
