@@ -395,7 +395,6 @@ set_timezone() {
     local timezone="$1"; shift
 
     ln -sT "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime
-    echo "$timezone" > /etc/timezone
 }
 
 set_locale() {
