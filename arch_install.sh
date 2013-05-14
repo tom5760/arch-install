@@ -625,13 +625,13 @@ MENU COLOR tabmsg       31;40   #30ffffff #00000000 std
 LABEL arch
 	MENU LABEL Arch Linux
 	LINUX ../vmlinuz-linux
-	APPEND root=/dev/vg00/root ro init=/bin/systemd $crypt resume=/dev/vg00/swap quiet
+	APPEND root=/dev/vg00/root ro $crypt resume=/dev/vg00/swap quiet
 	INITRD ../initramfs-linux.img
 
 LABEL archfallback
 	MENU LABEL Arch Linux Fallback
 	LINUX ../vmlinuz-linux
-	APPEND root=/dev/vg00/root ro init=/bin/systemd $crypt resume=/dev/vg00/swap
+	APPEND root=/dev/vg00/root ro $crypt resume=/dev/vg00/swap
 	INITRD ../initramfs-linux-fallback.img
 
 LABEL hdt
