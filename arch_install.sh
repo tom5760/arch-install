@@ -84,6 +84,30 @@ WIRELESS_DEVICE="wlan0"
 # For tc4200's
 #WIRELESS_DEVICE="eth1"
 
+#use this to get the passwords/passphrases
+function getMatchingInput(){
+    local INPUT1="foo"
+    local INPUT2="bar"
+    while [ $INPUT1 != $INPUT2 ]; do
+        echo -n $1
+        stty -echo
+        read INPUT1
+        stty echo
+        echo ""
+        echo -n $2
+        stty -echo
+        read INPUT2
+        stty echo
+        echo ""
+        if [ $INPUT1 != $INPUT2 ]; then
+            echo "Bad match!  Try again"
+        fi
+        if [ $INPUT1 = $INPUT2 ] ; then
+            INPUT=$INPUT1
+        fi
+    done
+}
+
 setup() {
     local boot_dev="$DRIVE"1
     local lvm_dev="$DRIVE"2
@@ -97,10 +121,8 @@ setup() {
 
         if [ -z "$DRIVE_PASSPHRASE" ]
         then
-            echo 'Enter a passphrase to encrypt the disk:'
-            stty -echo
-            read DRIVE_PASSPHRASE
-            stty echo
+            getMatchingInput "Enter a passphrase to encrypt the disk:" "Re-enter passphrase:"
+            DRIVE_PASSPHRASE=$INPUT
         fi
 
         echo 'Encrypting partition'
@@ -200,20 +222,16 @@ configure() {
 
     if [ -z "$ROOT_PASSWORD" ]
     then
-        echo 'Enter the root password:'
-        stty -echo
-        read ROOT_PASSWORD
-        stty echo
+        getMatchingInput "Enter the root password:" "Re-enter root password:"
+        ROOT_PASSWORD=$INPUT
     fi
     echo 'Setting root password'
     set_root_password "$ROOT_PASSWORD"
 
     if [ -z "$USER_PASSWORD" ]
     then
-        echo "Enter the password for user $USER_NAME"
-        stty -echo
-        read USER_PASSWORD
-        stty echo
+        getMatchingInput "Enter the password for user $USER_NAME" "Re-enter password"
+        USER_PASSWORD=$INPUT
     fi
     echo 'Creating initial user'
     create_user "$USER_NAME" "$USER_PASSWORD"
