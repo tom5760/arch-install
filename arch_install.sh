@@ -48,19 +48,19 @@ HOSTNAME='host100'
 ENCRYPT_DRIVE='TRUE'
 
 # Passphrase used to encrypt the drive (leave blank to be prompted).
-DRIVE_PASSPHRASE='a'
+DRIVE_PASSPHRASE=''
 
 # Root password (leave blank to be prompted).
-ROOT_PASSWORD='a'
+ROOT_PASSWORD=''
 
 # Main user to create (by default, added to wheel group, and others).
 USER_NAME='user'
 
 # The main user's password (leave blank to be prompted).
-USER_PASSWORD='a'
+USER_PASSWORD=''
 
 # System timezone.
-TIMEZONE='America/New_York'
+TIMEZONE='Pacific/Auckland'
 
 # Have /tmp on a tmpfs or not.  Leave blank to disable.
 # Only leave this blank on systems with very little RAM.
@@ -227,11 +227,11 @@ configure() {
 partition_drive() {
     local dev="$1"; shift
 
-    # 100 MB /boot partition, everything else under LVM
+    # 512 MB /boot partition, everything else under LVM
     parted -s "$dev" \
         mklabel msdos \
-        mkpart primary ext2 1 100M \
-        mkpart primary ext2 100M 100% \
+        mkpart primary ext2 1 512M \
+        mkpart primary ext2 512M 100% \
         set 1 boot on \
         set 2 LVM on
 }
@@ -252,8 +252,8 @@ setup_lvm() {
     pvcreate "$partition"
     vgcreate "$volgroup" "$partition"
 
-    # Create a 1GB swap partition
-    lvcreate -C y -L1G "$volgroup" -n swap
+    # Create a 8GB swap partition
+    # lvcreate -C y -L8192M "$volgroup" -n swap
 
     # Use the rest of the space for root
     lvcreate -l '+100%FREE' "$volgroup" -n root
@@ -301,10 +301,10 @@ install_packages() {
     local packages=''
 
     # General utilities/libraries
-    packages+=' alsa-utils aspell-en chromium cpupower gvim mlocate net-tools ntp openssh p7zip pkgfile powertop python python2 rfkill rsync sudo unrar unzip wget zip systemd-sysvcompat zsh grml-zsh-config'
+    packages+=' alsa-utils aspell-en firefox neofetch aalib libcaca cpupower mlocate net-tools ntp openssh p7zip pkgfile powertop python python2 rfkill rsync sudo unrar unzip wget zip systemd-sysvcompat zsh'
 
     # Development packages
-    packages+=' apache-ant cmake gdb git maven mercurial subversion tcpdump valgrind wireshark-gtk'
+    packages+=' apache-ant cmake gdb git maven tcpdump valgrind'
 
     # Netcfg
     if [ -n "$WIRELESS_DEVICE" ]
@@ -313,13 +313,13 @@ install_packages() {
     fi
 
     # Java stuff
-    packages+=' icedtea-web-java7 jdk7-openjdk jre7-openjdk'
+    packages+=' jdk8-openjdk jre8-openjdk'
 
     # Libreoffice
-    packages+=' libreoffice-calc libreoffice-en-US libreoffice-gnome libreoffice-impress libreoffice-writer hunspell-en hyphen-en mythes-en'
+    packages+=' libreoffice-fresh hunspell-en hyphen-en mythes-en'
 
     # Misc programs
-    packages+=' mplayer pidgin vlc xscreensaver gparted dosfstools ntfsprogs'
+    packages+=' mpv vlc xscreensaver gparted dosfstools ntfsprogs tmux rxvt-unicode'
 
     # Xserver
     packages+=' xorg-apps xorg-server xorg-xinit xterm'
